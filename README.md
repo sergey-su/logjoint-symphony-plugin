@@ -3,8 +3,8 @@
 Enables [LogJoint](https://github.com/sergey-su/logjoint) to open and visualize [Symphony](https://symphony.com/) logs.
 
 ## Development prerequisites
-- [.NET Core SDK](https://dotnet.microsoft.com/download)
-- [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) (only for debugging on Mac)
+- [.NET Core SDK](https://dotnet.microsoft.com/download). Be sure to restart the Terminal after installation.
+- [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) (only for debugging on Mac, make sure to check `macOS (Cocoa)` component in the installer)
 
 ## Build
 In repo's root dir:
@@ -35,10 +35,10 @@ Specify full path or a path with `%HOME%` to refer user's `~` dir.
 
 ## Debug in debugger (mac)
 
-The main app is built using Xamarin.Mac framework. There is not documented way to attach debugger to Xamarin.Mac process :(
+The main app is built using Xamarin.Mac framework. There is no documented way to attach debugger to Xamarin.Mac process :(
 
 The only way to debug is to build and run the main app from IDE:
-1. Install [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/)
+1. Install [Visual Studio for Mac](https://visualstudio.microsoft.com/vs/mac/) (make sure to check `macOS (Cocoa)` component in the installer)
 2. Checkout https://github.com/sergey-su/logjoint
 3. Open trunk/platforms/osx/logjoint.mac.sln
 4. Build the solution

@@ -10,12 +10,16 @@ namespace LogJoint.Symphony
 	{
 		public IPostprocessorsRegistry PostprocessorsRegistry { get; internal set; }
 		public SpringServiceLog.IPreprocessingStepsFactory BackendLogsPreprocessingStepsFactory { get; internal set; }
+		public LJTraceSource Logger { get; internal set; }
 	};
 
 	public class Factory
 	{
 		public static ModelObjects Create(LogJoint.IModel appModel)
 		{
+			var logger = appModel.TraceSourceFactory.CreateTraceSource("App", "sym-plugin");
+			logger.Info("Symphony plugin loaded!");
+
 			appModel.Postprocessing.TimeSeries.RegisterTimeSeriesTypesAssembly(typeof(TimeSeries.PostprocessorsFactory).Assembly);
 
 			StateInspector.IPostprocessorsFactory statePostprocessors = new StateInspector.PostprocessorsFactory(
@@ -76,7 +80,8 @@ namespace LogJoint.Symphony
 			return new ModelObjects
 			{
 				PostprocessorsRegistry = postprocessorsRegistry,
-				BackendLogsPreprocessingStepsFactory = backendLogsPreprocessingStepsFactory
+				BackendLogsPreprocessingStepsFactory = backendLogsPreprocessingStepsFactory,
+				Logger = logger
 			};
 		}
 	};

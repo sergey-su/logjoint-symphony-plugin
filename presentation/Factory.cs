@@ -52,49 +52,10 @@ namespace LogJoint.Symphony.UI.Presenters
 
 								if (modelObjects.BackendLogsPreprocessingStepsFactory != null)
 								{
-									SI.IVisualizerNode GetParent(SI.IVisualizerNode n) => n.Parent == null ? n : GetParent(n.Parent);
-									var (id, referenceTime, env) = Rtc.MeetingsStateInspector.GetMeetingRelatedId(
-										stateInspectorPresenter.SelectedObject.CreationEvent, stateInspectorPresenter.SelectedObject.ChangeHistory,
-										GetParent(stateInspectorPresenter.SelectedObject).CreationEvent, GetParent(stateInspectorPresenter.SelectedObject).ChangeHistory
-									);
-									if (id != null)
-									{
-										arg.Items.Add(new SI.MenuData.Item()
-										{
-											Text = "Download backend logs",
-											Click = () =>
-											{
-												var input = appPresentation.PromptDialog.ExecuteDialog(
-													"Download RTC backend logs",
-													"Specify query parameters",
-													$"ID={id}{Environment.NewLine}Environment={env ?? "(undetected)"}{Environment.NewLine}Reference time={referenceTime.ToString("o")}");
-												if (input != null)
-												{
-													var ids = new[] { id };
-													foreach (var line in input.Split('\r', '\n'))
-													{
-														var m = Regex.Match(line, @"^(?<k>[^\=]+)\=(?<v>.+)$", RegexOptions.ExplicitCapture);
-														if (!m.Success)
-															continue;
-														var k = m.Groups["k"].Value;
-														var v = m.Groups["v"].Value;
-														if (k == "ID")
-															ids = v.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-														else if (k == "Environment")
-															env = v;
-														else if (k == "Reference time")
-															if (DateTime.TryParseExact(v, "o", null, System.Globalization.DateTimeStyles.None, out var tmpRefTime))
-																referenceTime = tmpRefTime;
-													}
-													appModel.Preprocessing.Manager.Preprocess(
-														new[] { modelObjects.BackendLogsPreprocessingStepsFactory.CreateDownloadBackendLogsStep(ids, referenceTime, env) },
-														"Downloading backend logs",
-														Preprocessing.PreprocessingOptions.HighlightNewPreprocessing
-													);
-												}
-											}
-										});
-									}
+									var menuItem = DownloadBackendLogsMenu.CreateStateInspectorMenuItem(stateInspectorPresenter.SelectedObject,
+										appPresentation.PromptDialog, appModel.Preprocessing.Manager, modelObjects.BackendLogsPreprocessingStepsFactory);
+									if (menuItem != null)
+										arg.Items.Add(menuItem);
 								}
 							}
 						};
