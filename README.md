@@ -54,7 +54,7 @@ In repo's root dir:
 ```
 cd plugin
 dotnet build
-./pack.sh prod
+./pack.sh
 dotnet logjoint.plugintool deploy bin/symphony.zip <secret inbox URL>
 ```
 
