@@ -21,10 +21,9 @@ namespace LogJoint.Symphony.UI.Presenters
             );
             if (id != null)
             {
-                return new SI.MenuData.Item()
-                {
-                    Text = "Download backend logs",
-                    Click = () =>
+                return new SI.MenuData.Item(
+                    "Download backend logs",
+                    () =>
                     {
                         var input = prompt.ExecuteDialog(
                             "Download RTC backend logs",
@@ -55,7 +54,7 @@ namespace LogJoint.Symphony.UI.Presenters
                             );
                         }
                     }
-                };
+                );
             }
             return null;
         }
