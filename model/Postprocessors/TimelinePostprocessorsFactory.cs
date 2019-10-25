@@ -90,18 +90,16 @@ namespace LogJoint.Symphony.Timeline
 				((SVC.IMessagingEvents)new SVC.MessagingEvents()).GetEvents(inputMultiplexed));
 			var eofEvents = postprocessing.Timeline.CreateEndOfTimelineEventSource<SVC.Message>()
 				.GetEvents(inputMultiplexed);
-				
+
 			var events = EnumerableAsync.Merge(
 				messagingEvents,
 				eofEvents
 			);
 
-			var serialize = postprocessing.Timeline.SavePostprocessorOutput(
-				events,
-				null,
-				evtTrigger => TextLogEventTrigger.Make((SVC.Message)evtTrigger),
-				postprocessorInput
-			);
+			var serialize = postprocessing.Timeline.CreatePostprocessorOutputBuilder()
+				.SetEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((SVC.Message)evtTrigger))
+				.Build(postprocessorInput);
 
 			await Task.WhenAll(serialize, inputMultiplexed.Open());
 		}
@@ -128,12 +126,10 @@ namespace LogJoint.Symphony.Timeline
 				eofEvts
 			);
 
-			var serialize = postprocessing.Timeline.SavePostprocessorOutput(
-				events,
-				null,
-				evtTrigger => TextLogEventTrigger.Make((Sym.Message)evtTrigger),
-				postprocessorInput
-			);
+			var serialize = postprocessing.Timeline.CreatePostprocessorOutputBuilder()
+				.SetEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((Sym.Message)evtTrigger))
+				.Build(postprocessorInput);
 
 			await Task.WhenAll(serialize, symLog.Open(), inputMultiplexed.Open());
 		}

@@ -40,7 +40,7 @@ namespace LogJoint.Symphony.StateInspector
 			{
 				Sym.IMeetingsStateInspector symMeetingsStateInspector = new Sym.MeetingsStateInspector(matcher);
 				Sym.IMediaStateInspector symMediaStateInspector = new Sym.MediaStateInspector(matcher, symMeetingsStateInspector);
-				var symMessages = 
+				var symMessages =
 					(new Sym.Reader(postprocessing.TextLogParser, CancellationToken.None).FromChromeDebugLog(inputMultiplexed)).MatchTextPrefixes(matcher)
 					.Multiplex();
 
@@ -75,12 +75,10 @@ namespace LogJoint.Symphony.StateInspector
 				symMediagEvents
 			));
 
-			var serialize = postprocessing.StateInspector.SavePostprocessorOutput(
-				events,
-				null,
-				evtTrigger => TextLogEventTrigger.Make((Sym.Message)evtTrigger),
-				postprocessorInput
-			);
+			var serialize = postprocessing.StateInspector.CreatePostprocessorOutputBuilder()
+				.SetEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((Sym.Message)evtTrigger))
+				.Build(postprocessorInput);
 
 			await Task.WhenAll(serialize, logMessages.Open());
 		}

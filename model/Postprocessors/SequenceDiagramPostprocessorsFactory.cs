@@ -80,14 +80,10 @@ namespace LogJoint.Symphony.SequenceDiagram
 				messagingEvents.GetEvents(input)
 			);
 
-			await postprocessing.SequenceDiagram.SavePostprocessorOutput(
-				events,
-				null,
-				null,
-				null,
-				evtTrigger => TextLogEventTrigger.Make((SVC.Message)evtTrigger),
-				postprocessorInput
-			);
+			await postprocessing.SequenceDiagram.CreatePostprocessorOutputBuilder()
+				.SetMessagingEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((SVC.Message)evtTrigger))
+				.Build(postprocessorInput);
 		}
 
 		async Task RunForSMBLog(
@@ -101,14 +97,10 @@ namespace LogJoint.Symphony.SequenceDiagram
 				messagingEvents.GetEvents(input)
 			);
 
-			await postprocessing.SequenceDiagram.SavePostprocessorOutput(
-				events,
-				null,
-				null,
-				null,
-				evtTrigger => TextLogEventTrigger.Make((SMB.Message)evtTrigger),
-				postprocessorInput
-			);
+			await postprocessing.SequenceDiagram.CreatePostprocessorOutputBuilder()
+				.SetMessagingEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((SMB.Message)evtTrigger))
+				.Build(postprocessorInput);
 		}
 
 		async Task RunForClientLog(
@@ -118,14 +110,10 @@ namespace LogJoint.Symphony.SequenceDiagram
 		{
 			var events = RunForClientMessages(input);
 
-			await postprocessing.SequenceDiagram.SavePostprocessorOutput(
-				events,
-				null,
-				null,
-				null,
-				evtTrigger => TextLogEventTrigger.Make((Cli.Message)evtTrigger),
-				postprocessorInput
-			);
+			await postprocessing.SequenceDiagram.CreatePostprocessorOutputBuilder()
+				.SetMessagingEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((Cli.Message)evtTrigger))
+				.Build(postprocessorInput);
 		}
 
 		private IEnumerableAsync<Event[]> RunForClientMessages(

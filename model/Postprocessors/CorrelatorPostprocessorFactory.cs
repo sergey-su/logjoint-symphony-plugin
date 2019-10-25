@@ -4,33 +4,45 @@ using LogJoint.Postprocessing;
 using LogJoint.Postprocessing.Correlation;
 using M = LogJoint.Postprocessing.Messaging;
 using System.Collections.Generic;
-using LogJoint.Postprocessing.Messaging.Analisys;
 using System.Text;
 using System;
+using SVC = LogJoint.Symphony.SpringServiceLog;
 
 namespace LogJoint.Symphony.Correlator
 {
 	public interface IPostprocessorsFactory
 	{
-		ILogSourcePostprocessor CreatePostprocessor(IPostprocessorsRegistry postprocessorsRegistry);
+		ILogSourcePostprocessor CreateSpringServiceLogPostprocessor();
 	};
 
 	public class PostprocessorsFactory : IPostprocessorsFactory
 	{
-		readonly IModel ljModel;
-		readonly ISynchronizationContext modelThreadSync;
-		readonly IManager postprocessorsManager;
+		readonly Postprocessing.IModel postprocessingModel;
 
 		public PostprocessorsFactory(IModel ljModel)
 		{
-			this.ljModel = ljModel;
-			this.modelThreadSync = ljModel.SynchronizationContext;
-			this.postprocessorsManager = ljModel.Postprocessing.Manager;
+			this.postprocessingModel = ljModel.Postprocessing;
 		}
 
-		ILogSourcePostprocessor IPostprocessorsFactory.CreatePostprocessor(IPostprocessorsRegistry postprocessorsRegistry)
+		ILogSourcePostprocessor IPostprocessorsFactory.CreateSpringServiceLogPostprocessor()
 		{
-			return null;
+			return new LogSourcePostprocessor(PostprocessorKind.Correlator, RunForSpringServiceLog);
+		}
+
+		async Task RunForSpringServiceLog(LogSourcePostprocessorInput input)
+		{
+			var reader = new SpringServiceLog.Reader(postprocessingModel.TextLogParser, input.CancellationToken).Read(input.LogFileName, input.ProgressHandler);
+
+			SVC.IMessagingEvents messagingEvents = new SVC.MessagingEvents();
+
+			var events = EnumerableAsync.Merge(
+				messagingEvents.GetEvents(reader)
+			);
+
+			await postprocessingModel.Correlation.CreatePostprocessorOutputBuilder()
+				.SetMessagingEvents(events)
+				.SetTriggersConverter(evtTrigger => TextLogEventTrigger.Make((SVC.Message)evtTrigger))
+				.Build(input);
 		}
 	}
 }

@@ -40,15 +40,13 @@ namespace LogJoint.Symphony
 			this.springServiceLogFormat = findFormat("Symphony", "RTC Java Spring Service log");
 			this.smbLogFormat = findFormat("Symphony", "SMB log");
 
-			var correlatorPostprocessorType = correlatorPostprocessorsFactory.CreatePostprocessor(this);
-			postprocessorsManager.RegisterCrossLogSourcePostprocessor(correlatorPostprocessorType);
-
 			this.springServiceLogMeta = new LogSourceMetadata(
 				springServiceLogFormat,
 				sequenceDiagramPostprocessorsFactory.CreateSpringServiceLogPostprocessor(),
-				timelinePostprocessorsFactory.CreateSpringServiceLogPostprocessor()
+				timelinePostprocessorsFactory.CreateSpringServiceLogPostprocessor(),
+				correlatorPostprocessorsFactory.CreateSpringServiceLogPostprocessor()
 			);
-			postprocessorsManager.RegisterLogType(this.springServiceLogMeta);
+			postprocessorsManager.Register(this.springServiceLogMeta);
 
 			this.symRtcLogMeta = new LogSourceMetadata(
 				symRtcLogFormat,
@@ -57,13 +55,13 @@ namespace LogJoint.Symphony
 				timelinePostprocessorsFactory.CreateSymRtcPostprocessor(),
 				sequenceDiagramPostprocessorsFactory.CreateRtcLogPostprocessor()
 			);
-			postprocessorsManager.RegisterLogType(this.symRtcLogMeta);
+			postprocessorsManager.Register(this.symRtcLogMeta);
 
 			this.smbLogMeta = new LogSourceMetadata(
 				smbLogFormat,
 				sequenceDiagramPostprocessorsFactory.CreateSMBPostprocessor()
 			);
-			postprocessorsManager.RegisterLogType(this.smbLogMeta);
+			postprocessorsManager.Register(this.smbLogMeta);
 		}
 
 		LogSourceMetadata IPostprocessorsRegistry.SpringServiceLog => springServiceLogMeta;

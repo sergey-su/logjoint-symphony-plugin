@@ -15,9 +15,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using LogJoint.Postprocessing;
 using System.Threading;
-apa
-
-
 
 namespace LogJoint.Symphony.SpringServiceLog
 {
