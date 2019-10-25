@@ -15,6 +15,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using LogJoint.Postprocessing;
 using System.Threading;
+apa
+
+
 
 namespace LogJoint.Symphony.SpringServiceLog
 {
@@ -36,8 +39,8 @@ namespace LogJoint.Symphony.SpringServiceLog
 				Name = "qa5",
 				Region = RegionEndpoint.USEast1,
 				LoginEntryPoint = "https://duo.symphony.com/dag/saml2/idp/SSOService.php?spentityid=DI1D2H726TCM30VUZSK7",
-				LogGroupName = "sym-qa5-rtc",
-				LogStreamNamePrefix = "qa-sym-qa5-cs/qa-sym-qa5-cs/",
+				LogGroupName = "sym-qa5-qa-chat-glb-1-ms",
+				LogStreamNamePrefix = "rtc-cs/rtc-cs/",
 				SAMLRole = "Sym-SSO-DUO-Dev-Standard-Role",
 			};
 
@@ -46,8 +49,8 @@ namespace LogJoint.Symphony.SpringServiceLog
 				Name = "st2",
 				Region = RegionEndpoint.USEast1,
 				LoginEntryPoint = "https://duo.symphony.com/dag/saml2/idp/SSOService.php?spentityid=DIM6CNTQJPKJ6D4GJK04",
-				LogGroupName = "sym-st2-rtc",
-				LogStreamNamePrefix = "dev-sym-st2-cs/dev-sym-st2-cs/",
+				LogGroupName = "sym-st2-dev-chat-glb-1-ms",
+				LogStreamNamePrefix = "rtc-cs/rtc-cs/",
 				SAMLRole = "Sym-SSO-DUO-Dev-Standard-Role",
 			};
 
@@ -56,8 +59,8 @@ namespace LogJoint.Symphony.SpringServiceLog
 				Name = "rtc1",
 				Region = RegionEndpoint.USEast1,
 				LoginEntryPoint = "https://duo.symphony.com/dag/saml2/idp/SSOService.php?spentityid=DIM6CNTQJPKJ6D4GJK04",
-				LogGroupName = "sym-rtc1-rtc",
-				LogStreamNamePrefix = "dev-sym-rtc1-cs/dev-sym-rtc1-cs/",
+				LogGroupName = "sym-rtc1-dev-chat-glb-1-ms",
+				LogStreamNamePrefix = "rtc-cs/rtc-cs/",
 				SAMLRole = "Sym-SSO-DUO-Dev-Standard-Role",
 			};
 
