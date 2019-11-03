@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="logjoint.model.sdk" Version="0.0.2" />
+    <PackageReference Include="logjoint.model.sdk" Version="0.0.3" />
     <PackageReference Include="logjoint.chromium.plugin.model.sdk" Version="0.0.1" />
     <PackageReference Include="AWSSDK.CloudWatchLogs" Version="3.3.101.29" />
     <PackageReference Include="AWSSDK.SecurityToken" Version="3.3.102.30" />

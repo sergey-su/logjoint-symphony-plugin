@@ -16,4 +16,6 @@
   <file type="dll">AWSSDK.CloudWatchLogs.dll</file>
   <file type="dll">AWSSDK.Core.dll</file>
   <file type="dll">AWSSDK.SecurityToken.dll</file>
+  <file type="test">logjoint.symphony.plugin.integration.dll</file>
+  <file type="test-dll">NFluent.dll</file>
 </manifest>

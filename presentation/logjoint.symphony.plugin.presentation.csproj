@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="logjoint.model.sdk" Version="0.0.2" />
-    <PackageReference Include="logjoint.presentation.sdk" Version="0.0.2" />
+    <PackageReference Include="logjoint.model.sdk" Version="0.0.3" />
+    <PackageReference Include="logjoint.presentation.sdk" Version="0.0.4" />
     <ProjectReference Include="../model/logjoint.symphony.plugin.model.csproj" />
   </ItemGroup>
 
