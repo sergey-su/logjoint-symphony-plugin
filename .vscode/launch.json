@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Integration tests debug",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "${env:HOME}/.nuget/packages/logjoint.plugintool/0.0.4/lib/netcoreapp2.1/dotnet-logjoint.plugintool.dll",
+            "args": [
+                "test",
+                "${workspaceFolder}/plugin/bin/Debug/netstandard2.0",
+                "${env:HOME}/Applications/logjoint.app/Contents/MonoBundle",
+                "filter=*"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        }
+    ]
+}
