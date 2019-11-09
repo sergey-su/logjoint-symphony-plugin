@@ -51,7 +51,8 @@ Plugin integration tests verify that plugin binaries work with the host applicat
 
 To run integration tests
 ```
-dotnet logjoint.plugintool test bin/symphony.zip ~/Applications/logjoint.app/Contents/MonoBundle
+dotnet build
+dotnet logjoint.plugintool test bin/Debug/netstandard2.0 ~/Applications/logjoint.app/Contents/MonoBundle
 ```
 
 That command
